@@ -1,0 +1,9 @@
+import {transformWithEsbuild} from 'vite';import {readFileSync} from 'node:fs';import assert from 'node:assert/strict';
+const source=readFileSync('lib/supabase.ts','utf8').replace("import {defaultGroups,defaultSite} from './defaults';",readFileSync('lib/defaults.ts','utf8')).replaceAll('import.meta.env.VITE_SUPABASE_URL','"https://project.supabase.co"').replaceAll('import.meta.env.VITE_SUPABASE_ANON_KEY','"sb_publishable_test"');
+const output=await transformWithEsbuild(source,'lib/supabase.test.ts');
+const backend=await import('data:text/javascript;base64,'+Buffer.from(output.code).toString('base64'));
+const memory=new Map();globalThis.sessionStorage={getItem:key=>memory.get(key)||null,setItem:(key,value)=>memory.set(key,value),removeItem:key=>memory.delete(key)};
+const requests=[];globalThis.fetch=async(url,init={})=>{requests.push({url,init});if(url.includes('grant_type=password'))return Response.json({access_token:'signed-user-jwt',refresh_token:'refresh-token',expires_in:3600});if(url.endsWith('/rpc/is_club_admin'))return Response.json(true);if(url.includes('site_records'))return Response.json([]);if(url.includes('votes'))return Response.json([]);return Response.json({ok:true})};
+const publicData=await backend.loadData();assert.equal(publicData.isAdmin,false);assert(!requests[0].init.headers.Authorization);assert.equal(requests[0].init.headers.apikey,'sb_publishable_test');
+await backend.signIn('admin@example.com','twelve-char-password');assert.equal((await backend.loadData()).isAdmin,true);assert(requests.some(r=>r.url.includes('/rpc/is_club_admin')&&r.init.headers.Authorization==='Bearer signed-user-jwt'));
+await backend.signOut();assert(!sessionStorage.getItem('dunavska-kitka-admin-session'));console.log('Supabase anonymous key, signed session and logout verified');
