@@ -1,4 +1,5 @@
 import Club from '../club';
 import {getAdminUser} from '@/lib/access-auth';
+import Login from './login';
 export const dynamic='force-dynamic';
-export default async function Page(){const user=await getAdminUser();if(!user)return <main className="admin-gate"><h1>Нямате достъп</h1><p>Влезте с разрешения администраторски имейл чрез Cloudflare Access.</p><a className="button" href="/cdn-cgi/access/logout">Смени профила</a></main>;return <Club page="admin"/>}
+export default async function Page(){const user=await getAdminUser();if(!user)return <Login/>;return <><div style={{padding:'12px',textAlign:'right'}}><a href="/admin/accounts">Администратори</a> · <form action="/api/auth/logout" method="post" style={{display:'inline'}}><button className="button">Изход</button></form></div><Club page="admin"/></>}

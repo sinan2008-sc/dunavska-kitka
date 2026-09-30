@@ -12,7 +12,7 @@
     "start": "node --import ./scripts/sites-env.mjs ./node_modules/wrangler/bin/wrangler.js dev --config dist/server/wrangler.json --local --persist-to .wrangler/state --ip 127.0.0.1 --inspector-port 0",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
     "db:generate": "drizzle-kit generate",
-    "test": "node tests/access.test.mjs",
+    "test": "node tests/access.test.mjs && node tests/password.test.mjs && node tests/cardless-db.test.mjs",
     "cf:configure": "node scripts/configure-cloudflare.mjs",
     "cf:deploy": "wrangler deploy --config dist/server/wrangler.json",
     "cf:deploy-api": "wrangler deploy --config wrangler.public.json"
