@@ -1,7 +1,41 @@
 # Дунавска китка
 
-Готова статична версия за GitHub Pages. Публикуване: Settings → Pages → Deploy from a branch → main → /(root).
+Уебсайт на фолклорен ансамбъл „Дунавска китка“.
 
-Данните и управлението се обслужват от https://dunavska-kitka.theslayer31.chatgpt.site. Админ панел: https://dunavska-kitka.theslayer31.chatgpt.site/admin.
+- Сайт: https://sinan2008-sc.github.io/dunavska-kitka/
+- Админ панел: https://sinan2008-sc.github.io/dunavska-kitka/#/admin
+- Хостинг: GitHub Pages. Данни, идентификация и качени файлове: Supabase.
 
-Изходният код е в `source-code.zip`. След редакция на програмния код изпълнете `pnpm install --frozen-lockfile` и `GITHUB_REPOSITORY=sinan2008-sc/dunavska-kitka pnpm build`, след което заменете публикуваните файлове със съдържанието на `dist`. Текстовете, снимките, групите и обявите се редактират през админ панела без ново компилиране.
+## Структура
+
+В корена са публикуваните файлове на сайта. Папката `supabase/` съдържа актуалния React/Vite код, оригиналните изображения и SQL схемата. Съдържанието, редактирано през админ панела, се пази в Supabase.
+
+## Локално разработване
+
+Изисква Node.js 22.13 или по-нова версия и pnpm 11.25.0.
+
+```sh
+cd supabase
+pnpm install --frozen-lockfile
+cp .env.example .env.local
+pnpm dev
+```
+
+`.env.example` съдържа публичната конфигурация за проекта. В браузърното приложение не трябва да се поставят secret/service_role ключове, пароли или частни експорти.
+
+## Проверка и компилиране
+
+```sh
+node scripts/supabase-smoke.mjs
+GITHUB_REPOSITORY=sinan2008-sc/dunavska-kitka pnpm build
+```
+
+За публикуване съдържанието на `supabase/dist/` се копира в корена на хранилището и се записва в `main`. Запазете `.nojekyll`, `README.md` и папката с изходния код. GitHub Pages публикува от корена на `main`. Премахвайте старите `index-*.js` и `index-*.css` само след проверка кои файлове се използват от новия `index.html`.
+
+## Администратори и данни
+
+Администраторският достъп изисква потвърден Supabase Auth профил и имейл в `club_admin_emails`. Добавянето на имейл от панела разрешава достъп, но не създава профил и не изпраща покана. Имейл регистрациите до външни адреси изискват настройване на SMTP.
+
+`supabase/supabase/schema.sql` е схемата за първоначално настройване на нова база. Не я изпълнявайте отново върху работещия проект без преглед. `scripts/convert-export.mjs` преобразува частен пълен export на records/votes в SQL за импорт; резултатът и личните данни не се качват в GitHub.
+
+Старите варианти остават достъпни в Git историята. Работещата версия използва само GitHub Pages и Supabase.

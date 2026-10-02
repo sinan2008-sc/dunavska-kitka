@@ -1,1 +1,0 @@
-import {db} from '@/lib/data';import Login from '../login';export const dynamic='force-dynamic';export default async function Page(){const u=await db().prepare('SELECT email FROM admin_users LIMIT 1').first();return u?<main className="admin-gate"><p>Първоначалната настройка е завършена.</p><a href="/admin">Вход</a></main>:<Login setup/>}
