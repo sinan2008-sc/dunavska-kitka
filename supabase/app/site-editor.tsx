@@ -5,7 +5,7 @@ import {Plus,Trash2} from 'lucide-react';
 const fields=[
  ['topNote','Текст в горната лента','text'],['joinButton','Бутон за записване','text'],['heroEyebrow','Кратък надпис на началната','text'],['heroButton','Основен бутон на началната','text'],['heroNote','Бележка под бутоните','textarea'],
  ['heroTitle','Начално заглавие','textarea'],['heroText','Увод на началната страница','textarea'],['heroImage','Основна снимка','image'],
- ['homeGroupsTitle','Заглавие над групите','text'],['homeGroupsIntro','Текст над групите','textarea'],['homeNoticesTitle','Заглавие на обявите','text'],['homeCardTitle','Заглавие на зелената карта','text'],['homeCardText','Текст на зелената карта','textarea'],
+ ['homeGroupsTitle','Заглавие над групите','text'],['homeGroupsIntro','Текст над групите','textarea'],['homeNoticesTitle','Заглавие на обявите','text'],['homeCardTitle','Заглавие в информационното табло','text'],['homeCardText','Текст в информационното табло','textarea'],
  ['aboutTitle','Заглавие „За клуба“','text'],['aboutSubtitle','Подзаглавие „За клуба“','text'],['aboutEyebrow','Надпис „За клуба“','text'],['aboutImage','Снимка на ръководителя','image'],
  ['groupsTitle','Заглавие на групите','text'],['lessonsTitle','Заглавие на уроците','text'],['lessonsIntro','Въведение към уроците','text'],
  ['rehearsalsTitle','Заглавие на репетициите','text'],['scheduleImage','Снимка на графика','image'],

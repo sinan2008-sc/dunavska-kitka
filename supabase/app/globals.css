@@ -110,3 +110,11 @@ button,.button,.secondary,.danger,nav a,.text-link{font-family:Arial,Helvetica,s
 .back-to-top:hover{background:#d3a313;transform:translateY(-2px)}
 .back-to-top:focus-visible{outline:3px solid #244c40;outline-offset:4px}
 @media(prefers-reduced-motion:reduce){.back-to-top{transition:none}}
+
+/* Information board follows the group photo's elliptical left edge. */
+.green-card{border-radius:48% 7px 7px 48% / 50% 7px 7px 50%;padding:48px 28px 48px 24%;min-width:0;display:flex;flex-direction:column;justify-content:center;overflow-wrap:anywhere}
+.green-card .information-board-heading{margin:0 0 18px;color:#e8b923;font-size:clamp(22px,2.1vw,28px);line-height:1.2}
+.green-card h3{margin:0 0 16px}
+.green-card p{white-space:pre-wrap}
+.green-card>.motif{position:static;align-self:flex-end;margin-top:24px;flex-shrink:0}
+@media(max-width:720px){.green-card{border-radius:45% 7px 7px 45% / 50% 7px 7px 50%;padding:40px 24px 40px 24%}}
