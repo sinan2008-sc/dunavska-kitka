@@ -1,0 +1,10 @@
+/* Исправяне на локалните снимки при GitHub Pages и ZettaHost. */
+(()=>{"use strict";const prefix=location.hostname.endsWith("github.io")?"/dunavska-kitka/":"/";
+const names=new Set(["club-group.jpg","club-leader.jpg","club-logo-yellow.png","rehearsal-schedule.jpg"]);
+const normalize=(url)=>{try{const u=new URL(url,location.href);if(u.origin!==location.origin)return null;const n=u.pathname.split("/").pop();if(!names.has(n))return null;return prefix+n+u.search+u.hash;}catch{return null;}};
+const fix=(root)=>{const images=root.querySelectorAll?.("img[src],source[srcset],link[rel='icon'][href]")||[];for(const el of images){const attr=el.hasAttribute("src")?"src":el.hasAttribute("href")?"href":"srcset";const original=el.getAttribute(attr);if(!original)continue;const corrected=normalize(original);if(corrected&&original!==corrected)el.setAttribute(attr,corrected);}
+for(const el of root.querySelectorAll?.("[style*='background-image']")||[]){const current=el.style.backgroundImage;const match=current.match(/url\(["']?([^"')]+)/);if(match){const revised=normalize(match[1]);if(revised&&new URL(match[1],location.href).pathname!==revised)el.style.backgroundImage='url("'+revised+'")';}}};
+let pending=false;const run=()=>{pending=false;fix(document)};const schedule=()=>{if(!pending){pending=true;requestAnimationFrame(run)}};
+document.addEventListener("error",event=>{const el=event.target;if(el instanceof HTMLImageElement){const src=el.getAttribute("src")||"";const name=src.split("/").pop()?.split("?")[0];if(names.has(name)){const desired=prefix+name;if(src!==desired)el.src=desired;}}},true);
+document.addEventListener("DOMContentLoaded",schedule);new MutationObserver(schedule).observe(document.documentElement,{childList:true,subtree:true,attributes:true,attributeFilter:["src","style","href"]});schedule();
+})();
