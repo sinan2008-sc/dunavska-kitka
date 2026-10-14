@@ -7,3 +7,5 @@
 .dk-board-slot{min-width:0}.dk-board-slot .green-card{height:100%;box-sizing:border-box;border-radius:15px}.home-bottom>.green-card{display:none}.home-bottom{display:block!important}.home-bottom>div:first-child{width:100%}
 @media(max-width:840px){.dk-performances-layout{grid-template-columns:1fr;gap:17px}.dk-performances-panel{padding:23px 21px}.dk-board-slot .green-card{min-height:220px}}
 @media(max-width:480px){.dk-event{grid-template-columns:minmax(0,1fr) auto;gap:5px 8px}.dk-countdown{min-width:75px;padding:8px}.dk-countdown strong{font-size:17px}}
+/* Ляво заобляне на зеленото информационно табло, като при общата снимка. */
+.dk-board-slot .green-card{border-top-left-radius:20px;border-bottom-left-radius:20px;overflow:hidden}
