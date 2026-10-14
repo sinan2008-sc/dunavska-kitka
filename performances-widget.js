@@ -1,7 +1,6 @@
 /* Дунавска китка — участие / информационно табло. Не променя основното приложение. */
 (() => {
   "use strict";
-  const file = "./performances.json";
   let performances = [];
   const dayMs = 86400000;
   const isHome = () => location.hash === "" || location.hash === "#" || location.hash === "#/";
@@ -74,10 +73,9 @@
     if(changes.some(c=>!(c.target.nodeType===1 && c.target.closest("#dk-performances-layout")))) requestMount();
   });
   observer.observe(document.documentElement,{childList:true,subtree:true,characterData:true});
-  fetch(file,{cache:"no-store"}).then(r=>r.ok?r.json():[]).then(data=>{
-    performances=Array.isArray(data)?data:[];
-    renderEvents();
-  }).catch(()=>{performances=[];renderEvents();});
+  async function loadPerformances(){try{const response=await fetch("https://dmrwpxkkphmdmymfkzwl.supabase.co/rest/v1/site_records?select=id,data&kind=eq.performance",{headers:{apikey:"sb_publishable_1u-dN80rPQe5F1L2NclyRQ_qehD92ty",Accept:"application/json"},cache:"no-store"});if(!response.ok)throw new Error("HTTP "+response.status);const records=await response.json();performances=records.map(x=>({...x.data,id:x.id}));renderEvents();}catch(error){console.warn("Неуспешно зареждане на участията:",error);const list=document.querySelector("#dk-performances-list");if(list)list.textContent="Участията временно не могат да се заредят.";}}
+  window.addEventListener("dk-performances-updated",loadPerformances);
+  loadPerformances();
   setInterval(renderEvents,3600000);
   requestMount();
 })();
